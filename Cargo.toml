@@ -1,0 +1,13 @@
+[package]
+name = "pg-service-broker"
+version = "0.0.1"
+authors = ["Dave Goddard <dave@goddard.id.au>"]
+build = "build.rs"
+
+[build-dependencies]
+serde_codegen = "0.8"
+
+[dependencies]
+serde = "0.8"
+serde_json = "0.8"  # just for the example, not required in general
+
