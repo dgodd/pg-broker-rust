@@ -1,14 +1,23 @@
-extern crate serde;
-extern crate serde_json;
+extern crate rustc_serialize;
+#[macro_use]
+extern crate nickel;
 
-include!(concat!(env!("OUT_DIR"), "/serde_types.rs"));
+use nickel::{Nickel, HttpRouter, JsonBody};
+
+#[derive(RustcDecodable, RustcEncodable)]
+struct Person {
+    firstname: String,
+    lastname: String,
+}
 
 fn main() {
-    let point = Point { x: 1, y: 2 };
+    let mut server = Nickel::new();
 
-    let serialized = serde_json::to_string(&point).unwrap();
-    println!("serialized = {}", serialized);
+    server.post("/a/post/request",
+                middleware! { |request, response|
+        let person = request.json_as::<Person>().unwrap();
+        format!("Hello {} {}", person.firstname, person.lastname)
+    });
 
-    let deserialized: Point = serde_json::from_str(&serialized).unwrap();
-    println!("deserialized = {:?}", deserialized);
+    server.listen("127.0.0.1:6767");
 }
