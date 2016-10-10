@@ -7,5 +7,5 @@ cargo run
 Window 2
 
 ```
-curl -i -d '{"firstname":"fred","lastname":"smith"}' http://localhost:6767/a/post/request
+curl -i http://127.0.0.1:6767/v2/catalog ; echo
 ```
